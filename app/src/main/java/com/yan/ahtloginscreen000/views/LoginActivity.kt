@@ -2,6 +2,7 @@ package com.yan.ahtloginscreen000.views
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -13,6 +14,7 @@ import kotlinx.android.synthetic.main.activity_login.*
 import com.yan.ahtloginscreen000.utils.Helper
 import com.yan.ahtloginscreen000.viewmodels.LoginActivityViewModel
 
+private const val TAG = "LoginActivity"
 class LoginActivity : AppCompatActivity() {
     private val loginActivityViewModel by viewModels<LoginActivityViewModel>()
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -21,17 +23,23 @@ class LoginActivity : AppCompatActivity() {
         setupViewModels()
 
         button_login.setOnClickListener {
-            val username = editText_username.text.toString()
-            val password = editText_password.text.toString()
-            val user = LoginRequest(username = username, password = password)
-            if (!Helper.validateUsername(username) || !Helper.validatePassword(password)) {
-                Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show()
-            } else {
-                loginActivityViewModel.createUser(user) {
-//                    startActivity(Intent(this, SecondActivity::class.java))
-                }
-//
+            val username = textInputEditTextUsername.text.toString()
+            val password = textInputEditTextPassword.text.toString()
+            if (!Helper.validateUsername(username)){
+                textInputLayoutUsername.error = "Username can contain only alphanumeric characters, cannot be empty, maximum of 30 chars"
+                return@setOnClickListener
             }
+            if (!Helper.validatePassword(password)){
+                textInputLayoutPassword.error = "Password can contain only alphanumeric characters, cannot be empty, maximum of 16 chars"
+                return@setOnClickListener
+            }
+            textInputLayoutPassword.error = null
+            textInputLayoutUsername.error = null
+            val user = LoginRequest(username = username, password = password)
+            loginActivityViewModel.createUser(user) {
+                    startActivity(Intent(this, SecondActivity::class.java))
+            }
+
         }
 
     }
@@ -41,5 +49,6 @@ class LoginActivity : AppCompatActivity() {
         val service = UserApiInterface.instance
         loginActivityViewModel.userRepository = UserRepository(service, this)
     }
+
 
 }

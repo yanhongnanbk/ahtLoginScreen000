@@ -1,10 +1,7 @@
 package com.yan.ahtloginscreen000.remote
 
 import okhttp3.Interceptor
-import okhttp3.OkHttpClient
 import okhttp3.Response
-import okhttp3.logging.HttpLoggingInterceptor
-import java.util.concurrent.TimeUnit
 
 class SupportInterceptor: Interceptor {
 

@@ -13,11 +13,6 @@ const val BASE_URL = "https://private-222d3-homework5.apiary-mock.com/api/"
 
 interface UserApiInterface {
 
-//    @Headers(
-//        "Content-Type: application/json",
-//        "IMSI:357175048449937",
-//        "IMEI:510110406068589"
-//    )
     @POST("login")
     fun createUser(
         @Body login: LoginRequest
