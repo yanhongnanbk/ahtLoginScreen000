@@ -12,7 +12,7 @@ object OkHttpSupport {
     fun getUnsafeOkHttpClient() : OkHttpClient {
         val interceptor = HttpLoggingInterceptor()
         interceptor.level = HttpLoggingInterceptor.Level.HEADERS
-//        interceptor.level = HttpLoggingInterceptor.Level.BODY
+        interceptor.level = HttpLoggingInterceptor.Level.BODY
 
         val builder = OkHttpClient.Builder()
         builder.addInterceptor(interceptor)
