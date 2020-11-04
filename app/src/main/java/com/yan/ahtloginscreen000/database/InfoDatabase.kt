@@ -3,12 +3,12 @@ package com.yan.ahtloginscreen000.database
 import android.content.Context
 import androidx.room.*
 import com.google.gson.Gson
-import com.yan.ahtloginscreen000.models.Info
 import com.yan.ahtloginscreen000.models.User
+import com.yan.ahtloginscreen000.models.UserInfo
 
 @Database(
-    entities = arrayOf(Info::class),
-    version = 2
+    entities = arrayOf(UserInfo::class),
+    version = 4
 )
 
 @TypeConverters(MyTypeConverters::class)
@@ -26,7 +26,7 @@ abstract class InfoDatabase : RoomDatabase() {
                     Room.databaseBuilder(
                         context.applicationContext,
                         InfoDatabase::class.java, "InfoDatabase"
-                    ).build()
+                    ).fallbackToDestructiveMigration().build()
             }
             return instance as InfoDatabase
         }

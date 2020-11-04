@@ -4,10 +4,9 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity
-data class Info(
+data class UserInfo(
     var xAcc: String = "",
     var user: User
-
 ){
     @PrimaryKey(autoGenerate = true)
     var id: Long? = null

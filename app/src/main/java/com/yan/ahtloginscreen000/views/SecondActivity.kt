@@ -4,15 +4,13 @@ import android.os.Bundle
 import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.preference.PreferenceManager
 import com.yan.ahtloginscreen000.MainApplication
 import com.yan.ahtloginscreen000.R
 import com.yan.ahtloginscreen000.database.InfoDatabase
-import com.yan.ahtloginscreen000.models.Info
+import com.yan.ahtloginscreen000.models.UserInfo
 import com.yan.ahtloginscreen000.models.User
 import com.yan.ahtloginscreen000.remote.UserApiInterface
 import com.yan.ahtloginscreen000.repositories.UserRepository
-import com.yan.ahtloginscreen000.utils.Constants
 import com.yan.ahtloginscreen000.utils.Constants.USER_INFO
 import com.yan.ahtloginscreen000.utils.Constants.XACC_INFO
 import com.yan.ahtloginscreen000.viewmodels.SecondActivityViewModel
@@ -25,10 +23,12 @@ class SecondActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_second)
+
+        /**SetupViewmodels*/
         setupViewModels()
 
         /**Get Intent from Login Screen*/
-        val user = intent.getSerializableExtra(USER_INFO)
+        val user: User = intent.getSerializableExtra(USER_INFO) as User
 
         val xAcc = intent.getStringExtra(XACC_INFO).toString()
 
@@ -36,9 +36,17 @@ class SecondActivity : AppCompatActivity() {
         /**End getIntent*/
 
         /**save data to RoomDb*/
-        secondActivityViewModel.saveInfoToRoom(Info(xAcc, user as User))
+        val infoList = secondActivityViewModel.loadInfoList()?.value
+        Log.d(TAG, "infoList: ${infoList.toString()}")
+//        secondActivityViewModel.saveInfoToRoom(UserInfo(xAcc, user))
+        secondActivityViewModel.loadInfoList()?.observe(this, {
+            for (x in it) {
+                if (user.userId != x.user.userId) {
+                    secondActivityViewModel.saveInfoToRoom(UserInfo(xAcc, user))
+                }
+            }
+        })
         /**End save data to RoomDb*/
-
     }
 
     /**SetupViewmodels*/

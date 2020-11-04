@@ -1,10 +1,11 @@
 package com.yan.ahtloginscreen000.repositories
 
 import android.util.Log
+import androidx.lifecycle.LiveData
 import androidx.preference.PreferenceManager
 import com.yan.ahtloginscreen000.MainApplication
 import com.yan.ahtloginscreen000.database.InfoDAO
-import com.yan.ahtloginscreen000.models.Info
+import com.yan.ahtloginscreen000.models.UserInfo
 import com.yan.ahtloginscreen000.models.LoginRequest
 import com.yan.ahtloginscreen000.models.LoginResponse
 import com.yan.ahtloginscreen000.remote.UserApiInterface
@@ -48,15 +49,15 @@ class UserRepository(private val userApiInterface: UserApiInterface, private var
         )
     }
 
-
-
-    fun saveInfoToRoom(info: Info) {
+    fun saveInfoToRoom(userInfo: UserInfo) {
         GlobalScope.launch {
-            infoDAO.insertLoginInfoResponse(info)
+            infoDAO.insertLoginInfoResponse(userInfo)
         }
     }
 
-    companion object
+    fun loadInfoList(): LiveData<List<UserInfo>> {
+        return infoDAO.loadInfoList()
+    }
 
 }
 
