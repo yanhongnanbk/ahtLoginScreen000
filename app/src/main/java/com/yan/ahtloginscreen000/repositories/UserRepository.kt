@@ -5,9 +5,9 @@ import androidx.lifecycle.LiveData
 import androidx.preference.PreferenceManager
 import com.yan.ahtloginscreen000.MainApplication
 import com.yan.ahtloginscreen000.database.InfoDAO
-import com.yan.ahtloginscreen000.models.UserInfo
 import com.yan.ahtloginscreen000.models.LoginRequest
 import com.yan.ahtloginscreen000.models.LoginResponse
+import com.yan.ahtloginscreen000.models.UserInfo
 import com.yan.ahtloginscreen000.remote.UserApiInterface
 import com.yan.ahtloginscreen000.utils.Constants.PREF_NAME
 import kotlinx.coroutines.GlobalScope
@@ -28,7 +28,6 @@ class UserRepository(private val userApiInterface: UserApiInterface, private var
     fun loginUser(login: LoginRequest, onResult: (LoginResponse?, String?) -> Unit) {
         userApiInterface.loginUser(login).enqueue(
             object : Callback<LoginResponse> {
-
                 override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
                     Log.d(TAG, "onFailure")
                     onResult(null, "")
@@ -38,7 +37,6 @@ class UserRepository(private val userApiInterface: UserApiInterface, private var
                     call: Call<LoginResponse>,
                     response: Response<LoginResponse>
                 ) {
-
                     Log.d(TAG, "${response.body()?.toString()}")
                     sharedPreferences.putString(PREF_NAME, response.headers()["X-Acc"])
                     sharedPreferences.commit()
@@ -48,6 +46,7 @@ class UserRepository(private val userApiInterface: UserApiInterface, private var
             }
         )
     }
+
 
     fun saveInfoToRoom(userInfo: UserInfo) {
         GlobalScope.launch {

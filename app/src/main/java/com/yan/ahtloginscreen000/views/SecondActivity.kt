@@ -1,7 +1,7 @@
 package com.yan.ahtloginscreen000.views
 
 import android.os.Bundle
-import android.util.Log
+import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.yan.ahtloginscreen000.MainApplication
@@ -14,12 +14,12 @@ import com.yan.ahtloginscreen000.repositories.UserRepository
 import com.yan.ahtloginscreen000.utils.Constants.USER_INFO
 import com.yan.ahtloginscreen000.utils.Constants.XACC_INFO
 import com.yan.ahtloginscreen000.viewmodels.SecondActivityViewModel
+import kotlinx.android.synthetic.main.activity_second.*
 
 private const val TAG = "SecondActivity"
 
 class SecondActivity : AppCompatActivity() {
     private val secondActivityViewModel by viewModels<SecondActivityViewModel>()
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_second)
@@ -32,22 +32,27 @@ class SecondActivity : AppCompatActivity() {
 
         val xAcc = intent.getStringExtra(XACC_INFO).toString()
 
-        Log.d(TAG, "xAcc: $xAcc userInfo: ${user.toString()}")
+        textViewSecondActivityUserId.text = "UserId: "+ user.userId
+        textViewSecondActivityUsername.text = "Username: "+ user.userName
         /**End getIntent*/
 
-        /**save data to RoomDb*/
-        val infoList = secondActivityViewModel.loadInfoList()?.value
-        Log.d(TAG, "infoList: ${infoList.toString()}")
-//        secondActivityViewModel.saveInfoToRoom(UserInfo(xAcc, user))
         secondActivityViewModel.loadInfoList()?.observe(this, {
-            for (x in it) {
-                if (user.userId != x.user.userId) {
-                    secondActivityViewModel.saveInfoToRoom(UserInfo(xAcc, user))
+
+            if (it!=null){
+                /**save data to RoomDb*/
+                for (x in it) {
+                    if (user.userId != x.user.userId) {
+                        secondActivityViewModel.saveInfoToRoom(UserInfo(xAcc, user))
+                    }
                 }
+            }else{
+                secondActivityViewModel.saveInfoToRoom(UserInfo(xAcc, user))
             }
+//            progressbar_second_activity.visibility = View.GONE
         })
         /**End save data to RoomDb*/
     }
+
 
     /**SetupViewmodels*/
     private fun setupViewModels() {
