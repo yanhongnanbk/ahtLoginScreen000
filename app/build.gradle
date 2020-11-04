@@ -75,4 +75,12 @@ dependencies {
 
     //AndroidDebugDatabase
     debugImplementation'com.amitshekhar.android:debug-db:1.0.6'
+
+    // required if you want to use Mockito for unit tests
+    testImplementation 'org.mockito:mockito-core:3.3.1'
+    // required if you want to use Mockito for Android tests
+    androidTestImplementation 'org.mockito:mockito-android:2.7.22'
+
+    // SharedPreferences
+    implementation 'androidx.preference:preference:1.1.1'
 }

@@ -14,7 +14,6 @@ interface UserApiInterface {
     @Headers("x: y","z:t")
     @POST("login")
     fun createUser(
-//        @Header("Token") token: String?,
         @Header("Token") token: String?,
         @Body login: LoginRequest
     ): Call<LoginResponse>

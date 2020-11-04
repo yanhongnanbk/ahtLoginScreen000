@@ -7,17 +7,20 @@ import com.yan.ahtloginscreen000.models.Info
 import com.yan.ahtloginscreen000.models.LoginRequest
 import com.yan.ahtloginscreen000.models.LoginResponse
 import com.yan.ahtloginscreen000.repositories.UserRepository
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 private const val TAG = "LoginActivityViewModel"
+
 class LoginActivityViewModel(application: Application) : AndroidViewModel(application) {
 
     var userRepository: UserRepository? = null
 
     // Unit similar to void in java
-    fun createUser(xAcc:String,login: LoginRequest, callback: (LoginResponse) -> Unit) {
-        userRepository?.createUser(xAcc,login) { results ->
+    fun createUser(xAcc: String, login: LoginRequest, callback: (LoginResponse) -> Unit) {
+        userRepository?.createUser(xAcc, login) { results ->
             if (results == null) {
-                Log.d(TAG,"Error")
+                Log.d(TAG, "Error")
             } else {
                 callback(results)
             }
