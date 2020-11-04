@@ -1,40 +1,35 @@
 package com.yan.ahtloginscreen000.remote
 
-import com.yan.ahtloginscreen000.models.LoginResponse
 import com.yan.ahtloginscreen000.models.LoginRequest
+import com.yan.ahtloginscreen000.models.LoginResponse
 import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.http.*
+import retrofit2.http.Body
+import retrofit2.http.Headers
+import retrofit2.http.POST
 
 const val BASE_URL = "https://private-222d3-homework5.apiary-mock.com/api/"
 
 interface UserApiInterface {
 
-    @Headers("x: y","z:t")
+    @Headers(
+        "Content-Type:application/json",
+        "IMSI:357175048449937",
+        "IMEI:510110406068589"
+    )
     @POST("login")
-    fun createUser(
-        @Header("Token") token: String?,
+    fun loginUser(
         @Body login: LoginRequest
     ): Call<LoginResponse>
 
     companion object {
         val instance: UserApiInterface by lazy {
-            /***/
-//            val interceptor = HttpLoggingInterceptor()
-//            interceptor.level = HttpLoggingInterceptor.Level.HEADERS
-//            val httpClient = OkHttpClient.Builder().apply { addInterceptor(interceptor) }
-//            httpClient.addInterceptor { chain ->
-//                chain.proceed(chain.request().newBuilder().addHeader("x", "y").build())
-//            }
-            /***/
+
             val retrofit = Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
-//                .client(OkHttpClient.Builder().apply { addInterceptor(SupportInterceptor()) }.build())
-//                .client(httpClient.addInterceptor { chain ->
-//                    chain.proceed(chain.request().newBuilder().addHeader("x", "y").build())
-//                }.build())
+
                 .client(OkHttpSupport.getOkHttpClient())
                 .build()
 

@@ -3,12 +3,9 @@ package com.yan.ahtloginscreen000.viewmodels
 import android.app.Application
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
-import com.yan.ahtloginscreen000.models.Info
 import com.yan.ahtloginscreen000.models.LoginRequest
 import com.yan.ahtloginscreen000.models.LoginResponse
 import com.yan.ahtloginscreen000.repositories.UserRepository
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 
 private const val TAG = "LoginActivityViewModel"
 
@@ -17,12 +14,16 @@ class LoginActivityViewModel(application: Application) : AndroidViewModel(applic
     var userRepository: UserRepository? = null
 
     // Unit similar to void in java
-    fun createUser(xAcc: String, login: LoginRequest, callback: (LoginResponse) -> Unit) {
-        userRepository?.createUser(xAcc, login) { results ->
+    fun loginUser(login: LoginRequest, callback: (LoginResponse,String?) -> Unit) {
+        userRepository?.loginUser(login) { results, xAcc ->
+            Log.d(TAG,xAcc!!)
             if (results == null) {
                 Log.d(TAG, "Error")
+            } else if (results.error == "01") {
+                Log.d(TAG, "ErrorCode = ${results.error}")
+                callback(results,xAcc)
             } else {
-                callback(results)
+                Log.d(TAG, "ErrorCode = ${results.error}")
             }
         }
     }

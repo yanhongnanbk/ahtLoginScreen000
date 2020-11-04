@@ -18,20 +18,16 @@ abstract class InfoDatabase : RoomDatabase() {
 
     // 3
     companion object {
-        // 4
         private var instance: InfoDatabase? = null
 
-        // 5
         fun getInstance(context: Context): InfoDatabase {
             if (instance == null) {
-// 6
                 instance =
                     Room.databaseBuilder(
                         context.applicationContext,
                         InfoDatabase::class.java, "InfoDatabase"
                     ).build()
             }
-// 7
             return instance as InfoDatabase
         }
     }
