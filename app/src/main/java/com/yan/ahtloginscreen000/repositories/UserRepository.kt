@@ -19,8 +19,8 @@ class UserRepository(private val userApiInterface: UserApiInterface, context: Co
     val db = InfoDatabase.getInstance(context)
     val infoDao = db.infoDao()
 
-    fun createUser(login: LoginRequest, onResult: (LoginResponse?) -> Unit) {
-        userApiInterface.createUser(login).enqueue(
+    fun createUser(xAcc:String, login: LoginRequest, onResult: (LoginResponse?) -> Unit) {
+        userApiInterface.createUser(xAcc, login).enqueue(
             object : Callback<LoginResponse> {
 
                 override fun onFailure(call: Call<LoginResponse>, t: Throwable) {

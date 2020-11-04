@@ -36,7 +36,7 @@ class LoginActivity : AppCompatActivity() {
             textInputLayoutPassword.error = null
             textInputLayoutUsername.error = null
             val user = LoginRequest(username = username, password = password)
-            loginActivityViewModel.createUser(user) {
+            loginActivityViewModel.createUser("xyz",user) {
                     startActivity(Intent(this, SecondActivity::class.java))
             }
 

@@ -14,8 +14,8 @@ class LoginActivityViewModel(application: Application) : AndroidViewModel(applic
     var userRepository: UserRepository? = null
 
     // Unit similar to void in java
-    fun createUser(login: LoginRequest, callback: (LoginResponse) -> Unit) {
-        userRepository?.createUser(login) { results ->
+    fun createUser(xAcc:String,login: LoginRequest, callback: (LoginResponse) -> Unit) {
+        userRepository?.createUser(xAcc,login) { results ->
             if (results == null) {
                 Log.d(TAG,"Error")
             } else {

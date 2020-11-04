@@ -10,7 +10,7 @@ class SupportInterceptor: Interceptor {
      */
     override fun intercept(chain: Interceptor.Chain): Response {
         var request = chain.request()
-        request = request.newBuilder()
+            .newBuilder()
             .addHeader("Content-Type", "application/json")
             .addHeader("IMSI", "357175048449937")
             .addHeader("IMEI", "510110406068589")
