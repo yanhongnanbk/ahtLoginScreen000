@@ -15,9 +15,9 @@ interface InfoDAO {
 //    @Query("SELECT * FROM UserInfo ")
 //    fun loadInfoList(): LiveData<List<UserInfo>>
 
-    @Query("SELECT * FROM UserInfo ")
-    fun loadInfoList(): List<UserInfo>
+    @Query("SELECT * FROM UserInfo WHERE userId = :userId ")
+    fun loadInfoWithUserId(userId: String): UserInfo
 
-    @Query("UPDATE UserInfo SET userId =:userId")
-    fun updateUserInfo(userId: String)
+    @Query("UPDATE UserInfo SET xAcc =:xAcc")
+    fun updateXAcc(xAcc: String)
 }

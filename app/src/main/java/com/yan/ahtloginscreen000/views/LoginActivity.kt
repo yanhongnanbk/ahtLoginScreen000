@@ -26,12 +26,13 @@ private const val TAG = "LoginActivity"
 
 class LoginActivity : AppCompatActivity() {
     private val loginActivityViewModel by viewModels<LoginActivityViewModel>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
         setupViewModels()
-        /**Block Click LoginButton*/
 
+        /**Block Click LoginButton*/
         button_login.setOnClickListener {
             val username = textInputEditTextUsername.text.toString()
             val password = textInputEditTextPassword.text.toString()
@@ -91,15 +92,17 @@ class LoginActivity : AppCompatActivity() {
                 val contentIntent = Intent(applicationContext, SecondActivity::class.java)
                 contentIntent.putExtra(USER_INFO, loginRequest.user as Serializable)
                 contentIntent.putExtra(XACC_INFO, "x")
-                startActivity(contentIntent)
+//                startActivity(contentIntent)
 
             }
 
             loginActivityViewModel.showLoading.observe(this, Observer {
                 progressbar_login_activity.visibility = if (it) View.VISIBLE else View.GONE
             })
+
         }
         /**End Block Click LoginButton*/
+
     }
 
     /**SetupViewmodels*/

@@ -4,10 +4,10 @@ import android.util.Log
 import androidx.preference.PreferenceManager
 import com.yan.ahtloginscreen000.MainApplication
 import com.yan.ahtloginscreen000.data.database.InfoDAO
+import com.yan.ahtloginscreen000.data.remote.UserApiInterface
 import com.yan.ahtloginscreen000.models.LoginRequest
 import com.yan.ahtloginscreen000.models.LoginResponse
 import com.yan.ahtloginscreen000.models.UserInfo
-import com.yan.ahtloginscreen000.data.remote.UserApiInterface
 import com.yan.ahtloginscreen000.utils.Constants.PREF_NAME
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -34,26 +34,17 @@ class UserRepository(private val userApiInterface: UserApiInterface, private var
                     call: Call<LoginResponse>,
                     response: Response<LoginResponse>
                 ) {
-
+                    sharedPreferences.putString(PREF_NAME, response.headers()["X-Acc"])
+                    sharedPreferences.commit()
                     GlobalScope.launch {
-
-                        sharedPreferences.putString(PREF_NAME, response.headers()["X-Acc"])
-                        sharedPreferences.commit()
-
-                        val xAcc = response.headers()["X-Acc"]
-                        val userId = response.body()?.user?.userId
-                        val userName = response.body()?.user?.userName
-
-                        val x = infoDAO.loadInfoList()
-                        if (!x.any { it.userId==userId }){
-                            val userInfo = UserInfo(xAcc.toString(),userId.toString(),userName.toString())
-                            infoDAO.insertLoginInfoResponse(userInfo)
+                        val xAcc = response.headers()["X-Acc"].toString()
+                        val userId = response.body()?.user?.userId.toString()
+                        val userName = response.body()?.user?.userName.toString()
+                        if (infoDAO.loadInfoWithUserId(userId) == null) {
+                            infoDAO.insertLoginInfoResponse(UserInfo(xAcc, userId, userName))
+                        } else {
+                            infoDAO.updateXAcc(xAcc)
                         }
-//                        else{
-//                            if (userId != null) {
-//                                infoDAO.updateUserInfo(userId)
-//                            }
-//                        }
 
                         onResult(response.body())
                     }
