@@ -88,6 +88,10 @@ class LoginActivity : AppCompatActivity() {
             loginActivityViewModel.loginUser(user) { loginRequest ->
 
                 Log.d(TAG, "$loginRequest")
+                val contentIntent = Intent(applicationContext, SecondActivity::class.java)
+                contentIntent.putExtra(USER_INFO, loginRequest.user as Serializable)
+                contentIntent.putExtra(XACC_INFO, "x")
+                startActivity(contentIntent)
 
             }
 
