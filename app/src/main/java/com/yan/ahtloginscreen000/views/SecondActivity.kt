@@ -30,26 +30,26 @@ class SecondActivity : AppCompatActivity() {
         /**Get Intent from Login Screen*/
         val user: User = intent.getSerializableExtra(USER_INFO) as User
 
-        val xAcc = intent.getStringExtra(XACC_INFO).toString()
+//        val xAcc = intent.getStringExtra(XACC_INFO).toString()
 
         textViewSecondActivityUserId.text = "UserId: "+ user.userId
         textViewSecondActivityUsername.text = "Username: "+ user.userName
         /**End getIntent*/
 
-        secondActivityViewModel.loadInfoList()?.observe(this, {
-
-            if (it!=null){
-                /**save data to RoomDb*/
-                for (x in it) {
-                    if (user.userId != x.user.userId) {
-                        secondActivityViewModel.saveInfoToRoom(UserInfo(xAcc, user))
-                    }
-                }
-            }else{
-                secondActivityViewModel.saveInfoToRoom(UserInfo(xAcc, user))
-            }
-//            progressbar_second_activity.visibility = View.GONE
-        })
+//        secondActivityViewModel.loadInfoList()?.observe(this, {
+//
+//            if (it!=null){
+//                /**save data to RoomDb*/
+//                for (x in it) {
+//                    if (user.userId != x.user.userId) {
+//                        secondActivityViewModel.saveInfoToRoom(UserInfo(xAcc, user))
+//                    }
+//                }
+//            }else{
+//                secondActivityViewModel.saveInfoToRoom(UserInfo(xAcc, user))
+//            }
+////            progressbar_second_activity.visibility = View.GONE
+//        })
         /**End save data to RoomDb*/
     }
 

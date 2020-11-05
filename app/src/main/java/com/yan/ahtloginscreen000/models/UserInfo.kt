@@ -6,8 +6,9 @@ import androidx.room.PrimaryKey
 @Entity
 data class UserInfo(
     var xAcc: String = "",
-    var user: User
-){
+    var userId: String = "",
+    var userName: String = "",
+) {
     @PrimaryKey(autoGenerate = true)
     var id: Long? = null
 }

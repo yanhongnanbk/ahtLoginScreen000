@@ -8,7 +8,9 @@ import com.yan.ahtloginscreen000.models.UserInfo
 
 @Database(
     entities = arrayOf(UserInfo::class),
-    version = 4
+    version = 5,
+    exportSchema = false
+
 )
 
 @TypeConverters(MyTypeConverters::class)

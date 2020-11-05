@@ -74,24 +74,20 @@ class LoginActivity : AppCompatActivity() {
             if (!Helper.validateUsername(username)) {
                 textInputLayoutUsername.error =
                     "Username can contain only alphanumeric characters, cannot be empty, maximum of 30 chars"
-//                return@setOnClickListener
+                return@setOnClickListener
             }
 
             if (!Helper.validatePassword(password)) {
                 textInputLayoutPassword.error =
                     "Password can contain only alphanumeric characters, cannot be empty, maximum of 16 chars"
-//                return@setOnClickListener
+                return@setOnClickListener
             }
 
             val user = LoginRequest(username = username, password = password)
 
-            loginActivityViewModel.loginUser(user) { loginRequest, xAcc ->
+            loginActivityViewModel.loginUser(user) { loginRequest ->
 
-                Log.d(TAG, "$loginRequest, $xAcc")
-                val contentIntent = Intent(applicationContext, SecondActivity::class.java)
-                contentIntent.putExtra(USER_INFO, loginRequest.user as Serializable)
-                contentIntent.putExtra(XACC_INFO, xAcc)
-                startActivity(contentIntent)
+                Log.d(TAG, "$loginRequest")
 
             }
 

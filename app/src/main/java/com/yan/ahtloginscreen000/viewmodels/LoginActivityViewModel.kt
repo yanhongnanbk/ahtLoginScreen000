@@ -19,24 +19,23 @@ class LoginActivityViewModel(application: Application) : AndroidViewModel(applic
         get() = _showLoading
 
     // Unit similar to void in java
-    fun loginUser(login: LoginRequest, callback: (LoginResponse, String?) -> Unit) {
-        _showLoading.value = true
-        userRepository?.loginUser(login) { results, xAcc ->
+    fun loginUser(login: LoginRequest, callback: (LoginResponse) -> Unit) {
+        _showLoading.postValue(true)
+        userRepository?.loginUser(login) { results ->
 
-            Log.d(TAG, xAcc!!)
             when {
                 results == null -> {
                     Log.d(TAG, "Error")
                 }
                 results.error == "01" -> {
                     Log.d(TAG, "ErrorMessage = ${results.message}")
-                    callback(results, xAcc)
+                    callback(results)
                 }
                 else -> {
                     Log.d(TAG, "ErrorMessage = ${results.message}")
                 }
             }
-            _showLoading.value = false
+            _showLoading.postValue(false)
         }
     }
 

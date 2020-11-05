@@ -20,43 +20,61 @@ private const val TAG = "UserRepository"
 
 class UserRepository(private val userApiInterface: UserApiInterface, private var infoDAO: InfoDAO) {
 
-    //    val db = InfoDatabase.getInstance(MainApplication.applicationContext())
-//    val infoDao = db.infoDao()
     val sharedPreferences =
         PreferenceManager.getDefaultSharedPreferences(MainApplication.applicationContext()).edit()
 
-    fun loginUser(login: LoginRequest, onResult: (LoginResponse?, String?) -> Unit) {
+    fun loginUser(login: LoginRequest, onResult: (LoginResponse?) -> Unit) {
         userApiInterface.loginUser(login).enqueue(
             object : Callback<LoginResponse> {
                 override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
                     Log.d(TAG, "onFailure")
-                    onResult(null, "")
+                    onResult(null)
                 }
 
                 override fun onResponse(
                     call: Call<LoginResponse>,
                     response: Response<LoginResponse>
                 ) {
-                    Log.d(TAG, "${response.body()?.toString()}")
-                    sharedPreferences.putString(PREF_NAME, response.headers()["X-Acc"])
-                    sharedPreferences.commit()
 
-                    onResult(response.body(), response.headers()["X-Acc"])
+                    GlobalScope.launch {
+
+                        sharedPreferences.putString(PREF_NAME, response.headers()["X-Acc"])
+                        sharedPreferences.commit()
+
+                        val xAcc = response.headers()["X-Acc"]
+                        val userId = response.body()?.user?.userId
+                        val userName = response.body()?.user?.userName
+
+                        val x = infoDAO.loadInfoList()
+                        if (!x.any { it.userId==userId }){
+                            val userInfo = UserInfo(xAcc.toString(),userId.toString(),userName.toString())
+                            infoDAO.insertLoginInfoResponse(userInfo)
+                        }
+//                        else{
+//                            if (userId != null) {
+//                                infoDAO.updateUserInfo(userId)
+//                            }
+//                        }
+
+                        onResult(response.body())
+                    }
+
+
                 }
             }
         )
     }
 
 
-    fun saveInfoToRoom(userInfo: UserInfo) {
-        GlobalScope.launch {
-            infoDAO.insertLoginInfoResponse(userInfo)
-        }
-    }
+//    fun saveInfoToRoom(userInfo: UserInfo) {
+//        GlobalScope.launch {
+//            infoDAO.insertLoginInfoResponse(userInfo)
+//        }
+//    }
 
-    fun loadInfoList(): LiveData<List<UserInfo>> {
-        return infoDAO.loadInfoList()
-    }
+//    fun loadInfoList(): LiveData<List<UserInfo>> {
+//        return infoDAO.loadInfoList()
+//    }
 
 }
 

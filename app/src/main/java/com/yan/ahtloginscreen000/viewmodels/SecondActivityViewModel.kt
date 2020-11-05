@@ -14,16 +14,16 @@ class SecondActivityViewModel(application: Application) : AndroidViewModel(appli
     var userRepository: UserRepository? = null
     var liveUserInfoData: LiveData<List<UserInfo>>? = null
 
-    fun saveInfoToRoom(userInfo: UserInfo) {
-        userRepository?.saveInfoToRoom(userInfo)
-    }
-
-    fun loadInfoList(): LiveData<List<UserInfo>>? {
-        progressVisible.value = true
-        if (liveUserInfoData == null) {
-            liveUserInfoData = userRepository?.loadInfoList()
-        }
-        return liveUserInfoData
-    }
+//    fun saveInfoToRoom(userInfo: UserInfo) {
+//        userRepository?.saveInfoToRoom(userInfo)
+//    }
+//
+//    fun loadInfoList(): LiveData<List<UserInfo>>? {
+//        progressVisible.value = true
+//        if (liveUserInfoData == null) {
+//            liveUserInfoData = userRepository?.loadInfoList()
+//        }
+//        return liveUserInfoData
+//    }
 
 }

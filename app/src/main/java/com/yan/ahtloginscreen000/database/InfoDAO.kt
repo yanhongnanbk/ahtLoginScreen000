@@ -1,6 +1,5 @@
 package com.yan.ahtloginscreen000.database
 
-import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy.REPLACE
@@ -13,6 +12,12 @@ interface InfoDAO {
     @Insert(onConflict = REPLACE)
     fun insertLoginInfoResponse(userInfo: UserInfo)
 
-    @Query("SELECT * FROM UserInfo")
-    fun loadInfoList(): LiveData<List<UserInfo>>
+//    @Query("SELECT * FROM UserInfo ")
+//    fun loadInfoList(): LiveData<List<UserInfo>>
+
+    @Query("SELECT * FROM UserInfo ")
+    fun loadInfoList(): List<UserInfo>
+
+    @Query("UPDATE UserInfo SET userId =:userId")
+    fun updateUserInfo(userId: String)
 }
