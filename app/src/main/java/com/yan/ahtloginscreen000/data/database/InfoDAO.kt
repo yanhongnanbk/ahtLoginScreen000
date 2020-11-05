@@ -1,4 +1,4 @@
-package com.yan.ahtloginscreen000.database
+package com.yan.ahtloginscreen000.data.database
 
 import androidx.room.Dao
 import androidx.room.Insert

@@ -1,18 +1,15 @@
 package com.yan.ahtloginscreen000.views
 
 import android.os.Bundle
-import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.yan.ahtloginscreen000.MainApplication
 import com.yan.ahtloginscreen000.R
-import com.yan.ahtloginscreen000.database.InfoDatabase
-import com.yan.ahtloginscreen000.models.UserInfo
+import com.yan.ahtloginscreen000.data.database.InfoDatabase
 import com.yan.ahtloginscreen000.models.User
-import com.yan.ahtloginscreen000.remote.UserApiInterface
+import com.yan.ahtloginscreen000.data.remote.UserApiInterface
 import com.yan.ahtloginscreen000.repositories.UserRepository
 import com.yan.ahtloginscreen000.utils.Constants.USER_INFO
-import com.yan.ahtloginscreen000.utils.Constants.XACC_INFO
 import com.yan.ahtloginscreen000.viewmodels.SecondActivityViewModel
 import kotlinx.android.synthetic.main.activity_second.*
 

@@ -1,4 +1,4 @@
-package com.yan.ahtloginscreen000.remote
+package com.yan.ahtloginscreen000.data.remote
 
 import com.yan.ahtloginscreen000.models.LoginRequest
 import com.yan.ahtloginscreen000.models.LoginResponse

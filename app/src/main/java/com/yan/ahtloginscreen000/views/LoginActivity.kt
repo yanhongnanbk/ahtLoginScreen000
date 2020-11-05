@@ -11,9 +11,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import com.yan.ahtloginscreen000.MainApplication
 import com.yan.ahtloginscreen000.R
-import com.yan.ahtloginscreen000.database.InfoDatabase
+import com.yan.ahtloginscreen000.data.database.InfoDatabase
 import com.yan.ahtloginscreen000.models.LoginRequest
-import com.yan.ahtloginscreen000.remote.UserApiInterface
+import com.yan.ahtloginscreen000.data.remote.UserApiInterface
 import com.yan.ahtloginscreen000.repositories.UserRepository
 import com.yan.ahtloginscreen000.utils.Constants.USER_INFO
 import com.yan.ahtloginscreen000.utils.Constants.XACC_INFO

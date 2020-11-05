@@ -1,4 +1,4 @@
-package com.yan.ahtloginscreen000.remote
+package com.yan.ahtloginscreen000.data.remote
 
 import androidx.preference.PreferenceManager
 import com.yan.ahtloginscreen000.MainApplication

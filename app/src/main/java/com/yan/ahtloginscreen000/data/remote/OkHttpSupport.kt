@@ -1,4 +1,4 @@
-package com.yan.ahtloginscreen000.remote
+package com.yan.ahtloginscreen000.data.remote
 
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
