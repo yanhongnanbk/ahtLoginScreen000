@@ -55,16 +55,5 @@ class UserRepository(private val userApiInterface: UserApiInterface, private var
         )
     }
 
-
-//    fun saveInfoToRoom(userInfo: UserInfo) {
-//        GlobalScope.launch {
-//            infoDAO.insertLoginInfoResponse(userInfo)
-//        }
-//    }
-
-//    fun loadInfoList(): LiveData<List<UserInfo>> {
-//        return infoDAO.loadInfoList()
-//    }
-
 }
 

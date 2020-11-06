@@ -12,8 +12,8 @@ import androidx.lifecycle.Observer
 import com.yan.ahtloginscreen000.MainApplication
 import com.yan.ahtloginscreen000.R
 import com.yan.ahtloginscreen000.data.database.InfoDatabase
+import com.yan.ahtloginscreen000.data.remote.ApiService
 import com.yan.ahtloginscreen000.models.LoginRequest
-import com.yan.ahtloginscreen000.data.remote.UserApiInterface
 import com.yan.ahtloginscreen000.repositories.UserRepository
 import com.yan.ahtloginscreen000.utils.Constants.USER_INFO
 import com.yan.ahtloginscreen000.utils.Constants.XACC_INFO
@@ -92,7 +92,7 @@ class LoginActivity : AppCompatActivity() {
                 val contentIntent = Intent(applicationContext, SecondActivity::class.java)
                 contentIntent.putExtra(USER_INFO, loginRequest.user as Serializable)
                 contentIntent.putExtra(XACC_INFO, "x")
-//                startActivity(contentIntent)
+                startActivity(contentIntent)
 
             }
 
@@ -107,7 +107,7 @@ class LoginActivity : AppCompatActivity() {
 
     /**SetupViewmodels*/
     private fun setupViewModels() {
-        val service = UserApiInterface.instance
+        val service = ApiService.getClient()
         val db = InfoDatabase.getInstance(MainApplication.applicationContext())
         val infoDao = db.infoDao()
         loginActivityViewModel.userRepository = UserRepository(service, infoDao)
