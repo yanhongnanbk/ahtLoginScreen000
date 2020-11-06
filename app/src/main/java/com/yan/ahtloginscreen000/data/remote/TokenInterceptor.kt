@@ -1,6 +1,5 @@
 package com.yan.ahtloginscreen000.data.remote
 
-import android.util.Log
 import androidx.preference.PreferenceManager
 import com.yan.ahtloginscreen000.MainApplication
 import com.yan.ahtloginscreen000.utils.Constants.PREF_NAME
