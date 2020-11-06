@@ -7,10 +7,13 @@ import dagger.Provides
 import javax.inject.Singleton
 
 @Module
-class AppModule {
+class NetworkModule {
 
     @Singleton
     @Provides
     fun provideApi(): UserApiInterface = ApiService.getClient()
 
+//    @Provides
+//    @ApplicationScope
+//    fun provideApplicationContext(): Context = appContext
 }

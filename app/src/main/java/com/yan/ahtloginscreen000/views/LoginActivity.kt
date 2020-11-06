@@ -34,11 +34,11 @@ class LoginActivity : AppCompatActivity() {
     lateinit var userApiInterface: UserApiInterface
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_login)
         /**Dagger*/
         DaggerAppComponent.create().inject(this)
         /**End Dagger*/
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_login)
         setupViewModels()
         /**Block Click LoginButton*/
         button_login.setOnClickListener {

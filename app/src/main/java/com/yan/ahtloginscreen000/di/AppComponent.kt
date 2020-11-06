@@ -5,7 +5,7 @@ import dagger.Component
 import javax.inject.Singleton
 
 @Singleton
-@Component(modules = [AppModule::class])
+@Component(modules = [NetworkModule::class])
 interface AppComponent {
 
     // Where u want to inject < A bridge between Module and blah blah>
