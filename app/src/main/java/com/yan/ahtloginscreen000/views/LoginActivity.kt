@@ -12,7 +12,8 @@ import androidx.lifecycle.Observer
 import com.yan.ahtloginscreen000.MainApplication
 import com.yan.ahtloginscreen000.R
 import com.yan.ahtloginscreen000.data.database.InfoDatabase
-import com.yan.ahtloginscreen000.data.remote.ApiService
+import com.yan.ahtloginscreen000.data.remote.UserApiInterface
+import com.yan.ahtloginscreen000.di.DaggerAppComponent
 import com.yan.ahtloginscreen000.models.LoginRequest
 import com.yan.ahtloginscreen000.repositories.UserRepository
 import com.yan.ahtloginscreen000.utils.Constants.USER_INFO
@@ -21,17 +22,24 @@ import com.yan.ahtloginscreen000.utils.Helper
 import com.yan.ahtloginscreen000.viewmodels.LoginActivityViewModel
 import kotlinx.android.synthetic.main.activity_login.*
 import java.io.Serializable
+import javax.inject.Inject
 
 private const val TAG = "LoginActivity"
 
 class LoginActivity : AppCompatActivity() {
+
     private val loginActivityViewModel by viewModels<LoginActivityViewModel>()
+
+    @Inject
+    lateinit var userApiInterface: UserApiInterface
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
+        /**Dagger*/
+        DaggerAppComponent.create().inject(this)
+        /**End Dagger*/
         setupViewModels()
-
         /**Block Click LoginButton*/
         button_login.setOnClickListener {
             val username = textInputEditTextUsername.text.toString()
@@ -107,10 +115,10 @@ class LoginActivity : AppCompatActivity() {
 
     /**SetupViewmodels*/
     private fun setupViewModels() {
-        val service = ApiService.getClient()
+//        val service = ApiService.getClient()
         val db = InfoDatabase.getInstance(MainApplication.applicationContext())
         val infoDao = db.infoDao()
-        loginActivityViewModel.userRepository = UserRepository(service, infoDao)
+        loginActivityViewModel.userRepository = UserRepository(userApiInterface, infoDao)
     }
 
 
