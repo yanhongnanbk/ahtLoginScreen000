@@ -1,29 +1,20 @@
 package com.yan.ahtloginscreen000.data.remote
 
-import androidx.preference.PreferenceManager
-import com.yan.ahtloginscreen000.MainApplication
-import com.yan.ahtloginscreen000.utils.Constants.PREF_NAME
+import com.yan.ahtloginscreen000.repositories.UserManager
 import okhttp3.Interceptor
 import okhttp3.Response
+import javax.inject.Inject
 
-private const val TAG = "TokenInterceptor"
-
-class TokenInterceptor() : Interceptor {
-
-
+class TokenInterceptor @Inject constructor(val userManager: UserManager) : Interceptor {
 
     /**
      * Interceptor class for setting of the headers for every request
      */
     override fun intercept(chain: Interceptor.Chain): Response {
 
-        val sharedPreferences =
-            PreferenceManager.getDefaultSharedPreferences(MainApplication.applicationContext())
-        val x: String? = sharedPreferences.getString(PREF_NAME, "")
-
         val request = chain.request()
             .newBuilder()
-            .addHeader("x-Acc", x!!)
+            .addHeader("x-Acc", userManager.userAcc)
             .build()
         return chain.proceed(request)
     }

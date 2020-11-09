@@ -3,7 +3,7 @@
     <string name="title_activity_login">LoginActivity</string>
     <string name="prompt_username">Username</string>
     <string name="prompt_password">Password</string>
-    <string name="action_sign_in">Sign in</string>
+    <string name="action_sign_in">Icognito</string>
     <string name="welcome">"Welcome !"</string>
     <string name="invalid_username">Username must be less than 16 characters</string>
     <string name="invalid_password">Password must be less than 16 characters</string>
@@ -11,4 +11,5 @@
     <string name="splash_text">Splash</string>
     <string name="username_error_info">Username must be not empty, and maximum of 30 chars is allowed.</string>
     <string name="password_error_info">Password must be not empty, and maximum of 16 chars is allowed.</string>
+    <string name="action_sign_in_facebook">Sign in with facebook</string>
 </resources>

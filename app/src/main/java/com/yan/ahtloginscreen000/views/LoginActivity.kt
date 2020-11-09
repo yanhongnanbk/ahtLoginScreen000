@@ -6,16 +6,12 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.view.View
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
-import com.yan.ahtloginscreen000.MainApplication
+import androidx.lifecycle.ViewModelProvider
+import com.yan.ahtloginscreen000.MyApplication
 import com.yan.ahtloginscreen000.R
-import com.yan.ahtloginscreen000.data.database.InfoDatabase
-import com.yan.ahtloginscreen000.data.remote.UserApiInterface
-import com.yan.ahtloginscreen000.di.DaggerAppComponent
 import com.yan.ahtloginscreen000.models.LoginRequest
-import com.yan.ahtloginscreen000.repositories.UserRepository
 import com.yan.ahtloginscreen000.utils.Constants.USER_INFO
 import com.yan.ahtloginscreen000.utils.Constants.XACC_INFO
 import com.yan.ahtloginscreen000.utils.Helper
@@ -28,18 +24,18 @@ private const val TAG = "LoginActivity"
 
 class LoginActivity : AppCompatActivity() {
 
-    private val loginActivityViewModel by viewModels<LoginActivityViewModel>()
-
     @Inject
-    lateinit var userApiInterface: UserApiInterface
+    lateinit var factory: ViewModelProvider.Factory
+
+    private lateinit var loginActivityViewModel: LoginActivityViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         /**Dagger*/
-        DaggerAppComponent.create().inject(this)
+        (application as MyApplication).appComponent.inject(this)
         /**End Dagger*/
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
-        setupViewModels()
+        loginActivityViewModel = ViewModelProvider(this,factory).get(LoginActivityViewModel::class.java)
         /**Block Click LoginButton*/
         button_login.setOnClickListener {
             val username = textInputEditTextUsername.text.toString()
@@ -112,15 +108,6 @@ class LoginActivity : AppCompatActivity() {
         /**End Block Click LoginButton*/
 
     }
-
-    /**SetupViewmodels*/
-    private fun setupViewModels() {
-//        val service = ApiService.getClient()
-        val db = InfoDatabase.getInstance(MainApplication.applicationContext())
-        val infoDao = db.infoDao()
-        loginActivityViewModel.userRepository = UserRepository(userApiInterface, infoDao)
-    }
-
 
 }
 

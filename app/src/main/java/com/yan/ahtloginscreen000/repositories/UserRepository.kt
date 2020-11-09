@@ -2,9 +2,9 @@ package com.yan.ahtloginscreen000.repositories
 
 import android.util.Log
 import androidx.preference.PreferenceManager
-import com.yan.ahtloginscreen000.MainApplication
 import com.yan.ahtloginscreen000.data.database.InfoDAO
 import com.yan.ahtloginscreen000.data.remote.UserApiInterface
+import com.yan.ahtloginscreen000.data.sharedPref.SharedPreferencesStorage
 import com.yan.ahtloginscreen000.models.LoginRequest
 import com.yan.ahtloginscreen000.models.LoginResponse
 import com.yan.ahtloginscreen000.models.UserInfo
@@ -14,13 +14,11 @@ import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import javax.inject.Inject
 
 private const val TAG = "UserRepository"
 
-class UserRepository(private val userApiInterface: UserApiInterface, private var infoDAO: InfoDAO) {
-
-    val sharedPreferences =
-        PreferenceManager.getDefaultSharedPreferences(MainApplication.applicationContext()).edit()
+class UserRepository @Inject constructor(val userApiInterface: UserApiInterface, val infoDAO: InfoDAO,val userManager: UserManager) {
 
     fun loginUser(login: LoginRequest, onResult: (LoginResponse?) -> Unit) {
         userApiInterface.loginUser(login).enqueue(
@@ -34,8 +32,8 @@ class UserRepository(private val userApiInterface: UserApiInterface, private var
                     call: Call<LoginResponse>,
                     response: Response<LoginResponse>
                 ) {
-                    sharedPreferences.putString(PREF_NAME, response.headers()["X-Acc"])
-                    sharedPreferences.commit()
+                    response.headers()["X-Acc"]?.let { userManager.saveXacc(it) }
+
                     GlobalScope.launch {
                         val xAcc = response.headers()["X-Acc"].toString()
                         val userId = response.body()?.user?.userId.toString()

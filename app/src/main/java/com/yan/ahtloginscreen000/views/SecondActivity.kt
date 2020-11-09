@@ -3,12 +3,8 @@ package com.yan.ahtloginscreen000.views
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import com.yan.ahtloginscreen000.MainApplication
 import com.yan.ahtloginscreen000.R
-import com.yan.ahtloginscreen000.data.database.InfoDatabase
-import com.yan.ahtloginscreen000.data.remote.ApiService
 import com.yan.ahtloginscreen000.models.User
-import com.yan.ahtloginscreen000.repositories.UserRepository
 import com.yan.ahtloginscreen000.utils.Constants.USER_INFO
 import com.yan.ahtloginscreen000.viewmodels.SecondActivityViewModel
 import kotlinx.android.synthetic.main.activity_second.*
@@ -22,7 +18,7 @@ class SecondActivity : AppCompatActivity() {
         setContentView(R.layout.activity_second)
 
         /**SetupViewmodels*/
-        setupViewModels()
+//        setupViewModels()
 
         /**Get Intent from Login Screen*/
         val user: User = intent.getSerializableExtra(USER_INFO) as User
@@ -35,11 +31,11 @@ class SecondActivity : AppCompatActivity() {
     }
 
 
-    /**SetupViewmodels*/
-    private fun setupViewModels() {
-        val service = ApiService.getClient()
-        val db = InfoDatabase.getInstance(MainApplication.applicationContext())
-        val infoDao = db.infoDao()
-        secondActivityViewModel.userRepository = UserRepository(service, infoDao)
-    }
+//    /**SetupViewmodels*/
+//    private fun setupViewModels() {
+//        val service = ApiService.getClient()
+//        val db = InfoDatabase.getInstance(MainApplication.applicationContext())
+//        val infoDao = db.infoDao()
+//        secondActivityViewModel.userRepository = UserRepository(service, infoDao)
+//    }
 }

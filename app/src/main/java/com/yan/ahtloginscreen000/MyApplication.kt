@@ -1,28 +1,18 @@
 package com.yan.ahtloginscreen000
 
 import android.app.Application
-import android.content.Context
+import com.yan.ahtloginscreen000.di.AppComponent
+import com.yan.ahtloginscreen000.di.DaggerAppComponent
 
-class MainApplication : Application() {
 
-    init {
-        instance = this
+open class MyApplication : Application() {
+
+    // Instance of the AppComponent that will be used by all the Activities in the project
+    val appComponent: AppComponent by lazy {
+        // Creates an instance of AppComponent using its Factory constructor
+        // We pass the applicationContext that will be used as Context in the graph
+        DaggerAppComponent.factory().create(applicationContext)
+
     }
 
-    companion object {
-        private var instance: MainApplication? = null
-
-        fun applicationContext() : Context {
-            return instance!!.applicationContext
-        }
-    }
-
-    override fun onCreate() {
-        super.onCreate()
-        // initialize for any
-
-        // Use ApplicationContext.
-        // example: SharedPreferences etc...
-        val context: Context = applicationContext()
-    }
 }

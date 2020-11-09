@@ -2,6 +2,7 @@ package com.yan.ahtloginscreen000.data.remote
 
 import com.yan.ahtloginscreen000.models.LoginRequest
 import com.yan.ahtloginscreen000.models.LoginResponse
+import dagger.Binds
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.Headers

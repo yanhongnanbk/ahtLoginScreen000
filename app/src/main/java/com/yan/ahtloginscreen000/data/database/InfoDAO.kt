@@ -12,9 +12,6 @@ interface InfoDAO {
     @Insert(onConflict = REPLACE)
     fun insertLoginInfoResponse(userInfo: UserInfo)
 
-//    @Query("SELECT * FROM UserInfo ")
-//    fun loadInfoList(): LiveData<List<UserInfo>>
-
     @Query("SELECT * FROM UserInfo WHERE userId = :userId ")
     fun loadInfoWithUserId(userId: String): UserInfo
 

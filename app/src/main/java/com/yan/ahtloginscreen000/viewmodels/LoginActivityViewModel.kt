@@ -5,15 +5,16 @@ import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import com.yan.ahtloginscreen000.models.LoginRequest
 import com.yan.ahtloginscreen000.models.LoginResponse
 import com.yan.ahtloginscreen000.repositories.UserRepository
+import javax.inject.Inject
 
 private const val TAG = "LoginActivityViewModel"
 
-class LoginActivityViewModel(application: Application) : AndroidViewModel(application) {
+class LoginActivityViewModel @Inject constructor(var userRepository: UserRepository): ViewModel() {
 
-    var userRepository: UserRepository? = null
     private val _showLoading = MutableLiveData<Boolean>()
     val showLoading: LiveData<Boolean>
         get() = _showLoading
